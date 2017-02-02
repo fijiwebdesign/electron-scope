@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Electron Scope</title></head>
+	<body>
+		<div class="container">
+			<header>
+				<h1>Electron Scope</h1>
+			</header>
+			<section class="main">
+				<p>Node JS Debugger using Electron</p>
+			</section>
+			<footer></footer>
+		</div>
+		<script>
+
+			var script_path = location.search.slice(1)
+			require(script_path)
+
+		</script>
+	</body>
+</html>
