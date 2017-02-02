@@ -1,12 +1,12 @@
 {
-  "name": "electron-app",
-  "productName": "ElectronApp",
+  "name": "electron-scope",
+  "productName": "Electron Scope",
   "version": "0.0.0",
-  "description": "My delightful app",
+  "description": "Node JS Debugger using Electron",
   "license": "MIT",
   "repository": "fijiwebdesign/electron-app",
   "author": {
-    "name": "Gabe L",
+    "name": "Gabe",
     "email": "gabe@fijiwebdesign.com",
     "url": "fijiwebdesign.com"
   },
