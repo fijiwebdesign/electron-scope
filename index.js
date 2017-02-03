@@ -33,32 +33,15 @@ function createMainWindow() {
 	
 	
 
-	//win.loadURL(`file://${__dirname}/index.html?${script_path}`)
-
-	win.loadURL(`file://${__dirname}/index.html`)
-
-
-	//win.webContents.openDevTools({mode: 'undocked'})
+	win.loadURL(`file://${__dirname}/index.html?${script_path}`)
 
 	win.webContents.debugger.attach()
-	//setBreakpoint(win)
-
-	win.on('show', () => {
-		console.log('win show')
-
-		setTimeout(() => {
-			win.webContents.executeJavaScript(`require('./debug.js')`, () => {
-				setBreakpoint(win)
-				//win.webContents.debugger.attach()
-				//win.webContents.openDevTools()
-				
-				
-			})
-		}, 1000)
-		
-		
-		
-	})
+	setBreakpoint(win)
+	setTimeout(() => {
+		win.webContents.debugger.detach()
+		win.webContents.openDevTools({mode: 'undocked'})
+		setBreakpoint(win) // try again?
+	}, 500)
 
 	return win
 }

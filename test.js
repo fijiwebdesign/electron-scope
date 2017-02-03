@@ -1,1 +1,1 @@
-console.log('test loaded.')
+console.log('test loaded.', window)
