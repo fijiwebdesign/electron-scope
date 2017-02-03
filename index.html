@@ -13,11 +13,18 @@
 			</section>
 			<footer></footer>
 		</div>
+
 		<script>
-
-			var script_path = location.search.slice(1)
-			require(script_path)
-
+		
+		var script_path = location.search.slice(1)
+		if (script_path) {
+			console.log('Ready to debug: ', script_path)
+			var script = document.createElement('script')
+			script.src = script_path
+			document.body.appendChild(script)
+		}
+		
 		</script>
+
 	</body>
 </html>
