@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Electron Scope Test</title></head>
+	<body>
+		<div class="container">
+			<header>
+				<h1>Electron Scope Test</h1>
+			</header>
+			<section class="main">
+				<p>Node JS Debugger using Electron</p>
+			</section>
+			<footer></footer>
+		</div>
+
+		<script>
+
+		var src = location.search.slice(1)
+		if (src) {
+			src = require('path').resolve(src)
+			var Module = window.require('module')
+			Promise.resolve()
+			.then(() => {
+				var wrap = Module.wrap
+				Module.wrap = function(content) {
+					content = "debugger;\n" + content
+					return wrap.call(Module, content)
+				}
+				require(src)
+				return wrap
+			})
+			.then((wrap) => {
+				Module.wrap = wrap
+			})
+		}
+		
+		</script>
+
+	</body>
+</html>
