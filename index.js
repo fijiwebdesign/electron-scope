@@ -30,7 +30,12 @@ function createMainWindow() {
 	win.loadURL(`file://${__dirname}/index.html?${script_path}`)
 	win.on('closed', onClosed)
 
-	//win.webContents.openDevTools();
+	//win.webContents.openDevTools()
+	win.webContents.on('devtools-opened', () => {
+    	setImmediate(() => {
+			win.webContents.reload()
+		})
+	})
 	win.maximize()
 
 	return win
