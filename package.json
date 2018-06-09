@@ -1,15 +1,19 @@
 {
   "name": "electron-scope",
   "productName": "Electron Scope",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Node JS Debugger using Electron",
   "license": "MIT",
-  "repository": "fijiwebdesign/electron-app",
+  "repository": "fijiwebdesign/electron-scope",
   "author": {
     "name": "Gabe",
     "email": "gabe@fijiwebdesign.com",
-    "url": "fijiwebdesign.com"
+    "url": "https://github.com/fijiwebdesign/electron-scope"
   },
+  "bin": {
+    "electron-scope": "bin/electron-scope.js"
+  },
+  "preferGlobal": true,
   "scripts": {
     "test": "xo",
     "start": "electron .",
@@ -21,8 +25,10 @@
     "index.css"
   ],
   "keywords": [
-    "electron-app",
-    "electron"
+    "electron",
+    "debugger",
+    "node",
+    "inspector"
   ],
   "dependencies": {
     "electron-debug": "^1.0.0"
@@ -30,7 +36,7 @@
   "devDependencies": {
     "devtron": "^1.1.0",
     "electron-packager": "^7.0.0",
-    "electron-prebuilt": "^1.0.1",
+    "electron": "^1.0.1",
     "xo": "^0.15.0"
   },
   "xo": {

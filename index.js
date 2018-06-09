@@ -5,9 +5,13 @@ const minimist = require('minimist')
 const argv = require('minimist')(process.argv.slice(2))
 
 // params
-const script_path = argv['path']
+const script_path = argv['path'] || process.argv[2]
 
 console.log('Debugging ' + script_path)
+
+if (!script_path) {
+	throw new Error('Script path required')
+}
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')()
@@ -34,8 +38,6 @@ function createMainWindow() {
 		win.loadURL(`file://${__dirname}/index.html?${script_path}`)
 		win.webContents.openDevTools({mode: 'detached'})
 	}
-
-	
 
 	win.on('closed', onClosed)
 

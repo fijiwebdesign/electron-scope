@@ -22,7 +22,7 @@
 			var wrap = Module.wrap
 			Module.wrap = function(content) {
 				Module.wrap = wrap
-				content = "\ndebugger;\n" + content
+				//content = "\ndebugger;\n" + content
 				return Module.wrap(content)
 			}
 			require(src)
