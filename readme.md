@@ -16,6 +16,7 @@ Install the dependencies locally.
 ```
 $ cd electron-scope
 $ npm install
+$ npm link
 ```
 
 ### Run
@@ -23,7 +24,7 @@ $ npm install
 Run electron-scope with the local electron and pass it the script to debug in the --path option.
 
 ```
-$ electron . --path /path/to/node/app.js
+$ electron-scope /path/to/node/app.js
 ```
 
 ### Build
