@@ -35,9 +35,9 @@
   },
   "devDependencies": {
     "devtron": "^1.1.0",
-    "electron-packager": "^7.0.0",
     "electron": "^1.0.1",
-    "xo": "^0.15.0"
+    "electron-packager": "^14.0.1",
+    "xo": "^0.24.0"
   },
   "xo": {
     "esnext": true,
