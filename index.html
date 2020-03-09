@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<!-- https://www.npmjs.com/package/depd requires unsafe-eval-->
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';">
 		<title>Electron Scope</title></head>
 	<body>
 		<div class="container">
@@ -13,21 +15,6 @@
 			</section>
 			<footer></footer>
 		</div>
-		<script>
-
-		var src = location.search.slice(1)
-		if (src) {
-			src = require('path').resolve(src)
-			var Module = window.require('module')
-			var wrap = Module.wrap
-			Module.wrap = function(content) {
-				Module.wrap = wrap
-				//content = "\ndebugger;\n" + content
-				return Module.wrap(content)
-			}
-			require(src)
-		}
-
-		</script>
+		<script src="js/client.js"></script>
 	</body>
 </html>

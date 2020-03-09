@@ -2,7 +2,7 @@
 const electron = require('electron')
 const app = electron.app 
 const minimist = require('minimist')
-const argv = require('minimist')(process.argv.slice(2))
+const argv = minimist(process.argv.slice(2))
 
 // params
 const script_path = argv['path'] || process.argv[2]
