@@ -7,7 +7,7 @@ const argv = require('minimist')(process.argv.slice(2))
 // params
 const script_path = argv['path'] || process.argv[2]
 
-console.log('Debugging ' + script_path)
+console.log('Electron-scope is debugging: "' + script_path + '"')
 
 if (!script_path) {
 	throw new Error('Script path required')
@@ -28,7 +28,10 @@ function onClosed() {
 function createMainWindow() {
 	const win = new electron.BrowserWindow({
 		width: 600,
-		height: 400
+		height: 400,
+		webPreferences: {
+			nodeIntegration: true
+		}
 	})
 
 	if (script_path.match(/\.html?$/)) {
