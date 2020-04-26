@@ -3,6 +3,8 @@ const electron = require('electron')
 const app = electron.app 
 const minimist = require('minimist')
 const argv = minimist(process.argv.slice(2))
+const path = require('path')
+const debug = require('debug')('electron-scope:app')
 
 // params
 const script_path = argv['path'] || process.argv[2]
@@ -12,6 +14,11 @@ console.log('Electron-scope is debugging: "' + script_path + '"')
 if (!script_path) {
 	throw new Error('Script path required')
 }
+
+// reloads electron process on file changes
+const watched_path = script_path.replace(/([^\/]+)$/, '')
+require('./modules/electron-reload')(watched_path);
+debug('Watching for file changes within ', watched_path)
 
 // adds debug features like hotkeys for triggering dev tools and reload
 require('electron-debug')()
@@ -35,9 +42,11 @@ function createMainWindow() {
 	})
 
 	if (script_path.match(/\.html?$/)) {
-		win.loadURL('file://' + require('path').resolve(script_path))
+		debug('Loading html app as electron-scope html window render process')
+		win.loadURL('file://' + path.resolve(script_path))
 		win.webContents.openDevTools({mode: 'right'})
 	} else {
+		debug('Embedding node app within electron-scope html window render process')
 		win.loadURL(`file://${__dirname}/index.html?${script_path}`)
 		win.webContents.openDevTools({mode: 'detached'})
 	}
