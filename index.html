@@ -4,7 +4,9 @@
 		<meta charset="utf-8">
 		<!-- https://www.npmjs.com/package/depd requires unsafe-eval-->
 		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval';">
-		<title>Electron Scope</title></head>
+    <title>Electron Scope</title></head>
+    <link rel="stylesheet" href="css/get-display-media-electron-polyfill.css" />
+    <link rel="stylesheet" href="css/screencapture.css" />
 	<body>
 		<div class="container">
 			<header>
@@ -12,9 +14,22 @@
 			</header>
 			<section class="main">
 				<p>Node JS Debugger using Electron</p>
-			</section>
+      </section>
+      <section class="screencapture">
+        <p>Cast a screen.</p>
+          
+          <p><button id="start">Start Capture</button>&nbsp;<button id="stop">Stop Capture</button></p>
+          
+          <video id="video" autoplay></video>
+          <br>
+          
+          <strong>Log:</strong>
+          <br>
+          <pre id="log"></pre>
+      </section>
 			<footer></footer>
 		</div>
-		<script src="js/client.js"></script>
+    <script src="js/client.js"></script>
+    <script src="js/screencast.js"></script>
 	</body>
 </html>

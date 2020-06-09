@@ -32,6 +32,16 @@ function onClosed() {
 	mainWindow = null
 }
 
+function createScreenCapture(win) {
+  win.webContents.session.setPreloads([path.join(__dirname, 'js/get-diplay-media-electron-polyfill.js')])
+  win.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
+    return true
+  })
+  win.webContents.session.setPermissionRequestHandler(async (webContents, permission, callback, details) => {
+    callback(true)
+  })
+}
+
 function createMainWindow() {
 	const win = new electron.BrowserWindow({
 		width: 600,
@@ -39,7 +49,9 @@ function createMainWindow() {
 		webPreferences: {
 			nodeIntegration: true
 		}
-	})
+  })
+
+  createScreenCapture(win)
 
 	if (script_path.match(/\.html?$/)) {
 		debug('Loading html app as electron-scope html window render process')
