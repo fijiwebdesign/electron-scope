@@ -1,11 +1,43 @@
+const createStreamServer = require('./js/createStreamServer')
+
+const getLocalIp = (cb) => {
+  require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+    cb(err, add, fam)
+  })
+}
+
+let videoStreamServer
 async function startCapture() {
   logElem.innerHTML = "";
 
   try {
     videoElem.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
     dumpOptionsInfo();
+    const mediaStream = captureStream(videoElem)
+    const videoStream = new MediaRecorder(mediaStream, {mimeType : 'video/webm'})
+    global.mediaStream = mediaStream
+    global.videoStream = videoStream
+    const { Readable } = require('stream')
+    const readableStream = new Readable({
+      read() {
+        if (videoStream.state !== 'recording') {
+          videoStream.start()
+        }
+        videoStream.requestData()
+      }
+  })
+    global.readableStream = readableStream
+    videoStream.ondataavailable = async ({ data }) => {
+      readableStream.push(new Uint8Array(await data.arrayBuffer()))
+    }
+    videoStreamServer = createStreamServer(readableStream)
+    getLocalIp((err, addr) => {
+      if (err) addr = 'localhost'
+      log('Created video streaming server at ', 'http://' + addr + ':8888')
+    })
+    
   } catch(err) {
-    console.error("Error: " + err);
+    log("Error: " + err);
   }
 }
 
@@ -14,15 +46,33 @@ function stopCapture(evt) {
 
   tracks.forEach(track => track.stop());
   videoElem.srcObject = null;
+  videoStream.stop()
+  videoStreamServer.close()
 }
 
 function dumpOptionsInfo() {
   const videoTrack = videoElem.srcObject.getVideoTracks()[0];
  
-  console.info("Track settings:");
-  console.info(JSON.stringify(videoTrack.getSettings(), null, 2));
-  console.info("Track constraints:");
-  console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
+  log("Track settings:");
+  log(JSON.stringify(videoTrack.getSettings(), null, 2));
+  log("Track constraints:");
+  log(JSON.stringify(videoTrack.getConstraints(), null, 2));
+}
+
+function log() {
+  logElem.innerHTML += [ ...arguments ].join(", ") + '<br />'
+}
+
+function captureStream(videoElem, fps = 0) {
+  let stream
+  if (videoElem.captureStream) {
+    stream = videoElem.captureStream(fps);
+  } else if (videoElem.mozCaptureStream) {
+    stream = videoElem.mozCaptureStream(fps);
+  } else {
+    throw new Error('Stream capture is not supported');
+  }
+  return stream
 }
 
 const videoElem = document.getElementById("video");
